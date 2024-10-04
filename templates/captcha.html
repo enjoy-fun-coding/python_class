@@ -1,11 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>captcha 연습</title>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeXrlcqAAAAAHW2zB6HiQuTMFmrmA4eL1Hp-o4g"></script>
 </head>
 <body>
-    
+    <h1>테스트용 페이지</h1>
+    <p>
+        제발 되기를!!!
+    </p>
+    <form id="myForm" action="/submit" method="post"></form>
+        <input type="text" name="username" placeholder="Enter your username" required>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            grecaptcha.ready(function () {
+                grecaptcha.execute('YOUR_SITE_KEY', { action: 'submit' }).then(function (token) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'g-recaptcha-response';
+                    input.value = token;
+                    document.getElementById('myForm').appendChild(input);
+                    document.getElementById('myForm').submit();
+                });
+            });
+        });
+    </script>
 </body>
 </html>
